@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: systemeio-app
+server:
+  port: 8337
