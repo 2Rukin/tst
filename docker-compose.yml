@@ -1,0 +1,22 @@
+version: '3.1'
+
+services:
+  app:
+    build: .
+    ports:
+      - 8337:8337
+    depends_on:
+      - db
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: systemeioDb
+      POSTGRES_USER: systemioUser
+      POSTGRES_PASSWORD: P@ssw0rd!
+    ports:
+      - 5432:5432
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  db_data:

@@ -1,5 +1,14 @@
 spring:
   application:
     name: systemeio-app
+  datasource:
+#    url: jdbc:postgresql://db:5432/systemeioDb
+    url: jdbc:postgresql://localhost:5432/systemeioDb
+    username: systemioUser
+    password: P@ssw0rd!
+    driver-class-name: org.postgresql.Driver
+  liquibase:
+    change-log: classpath:/db/changelog/db.changelog-master.yml
+    default-schema: public
 server:
   port: 8337
