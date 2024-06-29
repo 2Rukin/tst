@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - changeSet:
+      id: V1_0__create_schema
+      author: VladislavTurukin
+      changes:
+        - sqlFile:
+            path: db/changelog/25_06_2024/V1_0__create_schema.sql
