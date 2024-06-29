@@ -17,9 +17,12 @@
     <name>systemeio-app</name>
     <description>VladislavTurukinTestApp</description>
 
+
     <properties>
         <java.version>17</java.version>
+<!--        тут должны быть все версии остальных депенденси-->
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>

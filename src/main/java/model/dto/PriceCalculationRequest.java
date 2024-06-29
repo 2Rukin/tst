@@ -11,7 +11,7 @@ import org.springframework.lang.Nullable;
 public class PriceCalculationRequest {
 
     @NotNull
-    private Long product;
+    private Long productId;
     @NotNull
     private String taxNumber;
     @Nullable

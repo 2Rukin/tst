@@ -4,15 +4,15 @@ package controller;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import model.BaseResponse;
-import model.dto.PriceCalculationRequest;
-import model.dto.PriceCalculationResult;
+import model.dto.PurchaseRequest;
+import model.dto.PurchaseResult;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import service.price_calc.PriceCalculatorService;
+import service.purchase.DoPurchaseService;
 
 import java.util.UUID;
 
@@ -21,33 +21,34 @@ import static utility.ApiCodes.*;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1")
-public class PriceCalculatorController implements PriceCalculatorApi {
+public class PurchaseController implements PurchaseApi {
 
-    private final PriceCalculatorService priceCalculatorService;
+    private final DoPurchaseService purchaseService;
 
-
-    @Operation(summary = "Рассчитать цену продукта",
-            description = "Рассчитывает цену продукта с учетом налогов и купонов")
-    @PostMapping("/calculate-price")
-    public ResponseEntity<BaseResponse<PriceCalculationResult>> calculatePrice(@RequestBody PriceCalculationRequest request) {
+    @Override
+    @Operation(summary = "Совершить покупку",
+            description = "Совершает покупку с учетом налогов и купонов")
+    @PostMapping("/purchase")
+    public ResponseEntity<BaseResponse<PurchaseResult>> doPurchase(@RequestBody PurchaseRequest request) {
         try {
-            PriceCalculationResult result = priceCalculatorService.calculateProductPrice(request);
-            BaseResponse<PriceCalculationResult> response = BaseResponse.<PriceCalculationResult>builder()
+            PurchaseResult result = purchaseService.doPurchase(request);
+            BaseResponse<PurchaseResult> response = BaseResponse.<PurchaseResult>builder()
                     .sessionId(UUID.randomUUID())
-                    .data(result)
                     .status(SUCCESS.getCode())
+                    .data(result)
                     .build();
             return ResponseEntity.ok(response);
         } catch (Exception e) {
-            BaseResponse<PriceCalculationResult> response = BaseResponse.<PriceCalculationResult>builder()
+            BaseResponse<PurchaseResult> response = BaseResponse.<PurchaseResult>builder()
                     .sessionId(UUID.randomUUID())
                     .status(ERROR.getCode())
                     .errorDetails(BaseResponse.ErrorDetails.builder()
-                            .errorCode(CALCULATION_ERROR.getCode())
+                            .errorCode(PURCHASE_ERROR.getCode())
                             .errorMessage(e.getMessage())
                             .build())
                     .build();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
     }
+
 }

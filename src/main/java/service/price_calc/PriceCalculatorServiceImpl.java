@@ -1,4 +1,4 @@
-package service;
+package service.price_calc;
 
 import model.dto.PriceCalculationRequest;
 import model.dto.PriceCalculationResult;
